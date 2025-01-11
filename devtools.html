@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 20px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #1a1a1a;
+            color: #e2e8f0;
+        }
+        .endpoints {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .endpoints h3 {
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            font-size: 14px;
+        }
+        .endpoint-url {
+            color: #94a3b8;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        #clearBtn {
+            padding: 10px 16px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        #clearBtn:hover {
+            background: #b91c1c;
+        }
+        #status-message {
+            text-align: center;
+            padding: 16px;
+            color: #94a3b8;
+            font-size: 14px;
+            margin: 20px 0;
+            background: #2d2d2d;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .data-container {
+            background: #2d2d2d;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+        .response-data {
+            padding: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            background: #363636;
+            border-radius: 6px;
+            margin: 10px;
+        }
+        .copy-btn {
+            padding: 8px 16px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #2563eb;
+        }
+        .request-header {
+            padding: 12px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .request-method {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+        .activity-label {
+            color: #94a3b8;
+            font-size: 12px;
+            font-family: monospace;
+        }
+        .request-item.activity {
+            margin-bottom: 16px;
+            background: #2d2d2d;
+            border-radius: 8px;
+            overflow: hidden;
+            border-left: 4px solid #2196F3;
+        }
+        #showOverlayBtn {
+            padding: 10px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="endpoints">
+        <h3>Altissia Wizard Monitor</h3>
+        <button id="showOverlayBtn">Show Overlay</button>
+    </div>
+    <div id="requests-container"></div>
+    <script src="devtools.js"></script>
+</body>
+</html>

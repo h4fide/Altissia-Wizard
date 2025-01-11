@@ -1,0 +1,1 @@
+use this command `npm run watch`  

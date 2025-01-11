@@ -1,0 +1,53 @@
+{
+    "manifest_version": 3,
+    "name": "Altissia Wizard",
+    "version": "1.10.1",
+    "description": "Altissia Wizard is a tool that helps you to get answers of quizzes in OFPPT Langues platform.",
+    "permissions": [
+        "cookies",
+        "webRequest",
+        "webRequestBlocking",
+        "declarativeNetRequest",
+        "activeTab",
+        "scripting",
+        "storage",
+        "clipboardWrite",
+        "tabs"
+    ],
+    "host_permissions": [
+        "*://*.ofppt-langues.ma/*",
+        "https://app.ofppt-langues.ma/*",
+        "*://*.altissia.org/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://app.ofppt-langues.ma/platform/learning-path/mission/*/activity/*",
+                "https://app.ofppt-langues.ma/*"
+            ],
+            "js": ["contentScript.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "128": "icons/icon128.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icons/icon.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "devtools_page": "devtools.html",
+    "incognito": "split",
+    "web_accessible_resources": [
+        {
+            "resources": ["data.html"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}
