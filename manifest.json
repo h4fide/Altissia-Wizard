@@ -4,14 +4,10 @@
     "version": "1.10.1",
     "description": "Altissia Wizard is a tool that helps you to get answers of quizzes in OFPPT Langues platform.",
     "permissions": [
-        "cookies",
-        "webRequest",
-        "webRequestBlocking",
-        "declarativeNetRequest",
+        "storage",
         "activeTab",
         "scripting",
-        "storage",
-        "clipboardWrite",
+        "devtools",
         "tabs"
     ],
     "host_permissions": [
@@ -49,5 +45,8 @@
             "resources": ["data.html"],
             "matches": ["<all_urls>"]
         }
-    ]
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
 }

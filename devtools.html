@@ -1,127 +1,244 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
-        body { 
-            margin: 0; 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
             padding: 20px;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #1a1a1a;
-            color: #e2e8f0;
+            background-color: #f5f5f5;
         }
-        .endpoints {
-            background: #2d2d2d;
-            border-radius: 8px;
-            padding: 16px;
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
-        .endpoints h3 {
-            margin: 0 0 8px 0;
-            color: #ffffff;
+
+        .back-button {
+            color: #2557a7;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .progress {
+            color: #666;
             font-size: 14px;
         }
-        .endpoint-url {
-            color: #94a3b8;
-            font-family: monospace;
-            font-size: 13px;
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
         }
-        #clearBtn {
-            padding: 10px 16px;
-            background: #dc2626;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
+
+        .progress-fill {
+            width: 100%;
+            height: 100%;
+            background-color: #4FB6B2;
+            border-radius: 4px;
         }
-        #clearBtn:hover {
-            background: #b91c1c;
-        }
-        #status-message {
+
+        .question-title {
+            font-size: 20px;
+            color: #333;
             text-align: center;
-            padding: 16px;
-            color: #94a3b8;
-            font-size: 14px;
-            margin: 20px 0;
-            background: #2d2d2d;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
         }
-        .data-container {
-            background: #2d2d2d;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            margin-top: 20px;
-        }
-        .response-data {
-            padding: 16px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #e2e8f0;
-            background: #363636;
-            border-radius: 6px;
-            margin: 10px;
-        }
-        .copy-btn {
-            padding: 8px 16px;
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .copy-btn:hover {
-            background: #2563eb;
-        }
-        .request-header {
-            padding: 12px;
-            border-bottom: 1px solid #404040;
+
+        .audio-player {
+            width: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
         }
-        .request-method {
-            padding: 4px 8px;
+
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .timeline {
+            flex-grow: 1;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .timeline-progress {
+            width: 30%;
+            height: 100%;
+            background: #2557a7;
+            border-radius: 2px;
+        }
+
+        .time-display {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .volume-control {
+            width: 100px;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+        }
+
+        .question-box {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .question {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 20px;
+            margin-top: 0; /* Reset margin since we're using question-box */
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .question:first-of-type {
+            margin-top: 0; /* Reset this as well */
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 0; /* Reset margin since we're using question-box */
+        }
+
+        .option {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .primary-option {
+            background-color: #e8f5e9;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+        }
+
+        .alternative-option {
+            background-color: #fff3e0;
+            border: 1px solid #ff9800;
+            color: #ef6c00;
+        }
+
+        .ou-label {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background-color: #ff9800;
+            color: white;
+            padding: 2px 8px;
             border-radius: 4px;
             font-size: 12px;
-            font-weight: 600;
-            color: white;
+            font-weight: bold;
         }
-        .activity-label {
-            color: #94a3b8;
-            font-size: 12px;
-            font-family: monospace;
+
+        .option.copied {
+            opacity: 0.8;
         }
-        .request-item.activity {
-            margin-bottom: 16px;
-            background: #2d2d2d;
-            border-radius: 8px;
-            overflow: hidden;
-            border-left: 4px solid #2196F3;
+
+        .option.copied::after {
+            content: 'Copié';
+            position: absolute;
+            right: 20px;
+            color: inherit;
         }
-        #showOverlayBtn {
-            padding: 10px 16px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-right: 10px;
+
+        .no-data {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
-    <div class="endpoints">
-        <h3>Altissia Wizard Monitor</h3>
-        <button id="showOverlayBtn">Show Overlay</button>
+    <div class="container">
+        <div class="header">
+            <a href="#" class="back-button">Questions disponibles</a>
+            <span id="questions-dis" class="progress">En attente...</span>
+        </div>
+        <div id="error-container" style="color: red; display: none;"></div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <h1 class="question-title">En attente des réponses...</h1>
     </div>
-    <div id="requests-container"></div>
+    <script>
+        // Add message listener
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'updateContent') {
+                const data = event.data.data;
+                const container = document.querySelector('.container');
+                const questionsCounter = document.querySelector('#questions-dis');
+                
+                if (container && questionsCounter) {
+                    questionsCounter.textContent = `${data.questionCount} questions`;
+                    // Update container with answers...
+                    container.innerHTML = `
+                        <div class="header">
+                            <a href="#" class="back-button">Questions disponibles</a>
+                            <span class="progress">${data.questionCount} questions</span>
+                        </div>
+                        <!-- ...rest of your HTML template... -->
+                    `;
+                }
+            }
+        });
+
+        // Global copy function
+        window.copyText = function(element) {
+            const text = element.querySelector('.answer-text').textContent;
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    element.classList.add('copied');
+                    setTimeout(() => element.classList.remove('copied'), 1000);
+                })
+                .catch(console.error);
+        };
+    </script>
     <script src="devtools.js"></script>
 </body>
 </html>
