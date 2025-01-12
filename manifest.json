@@ -21,8 +21,7 @@
                 "https://app.ofppt-langues.ma/platform/learning-path/mission/*/activity/*",
                 "https://app.ofppt-langues.ma/*"
             ],
-            "js": ["contentScript.js"],
-            "run_at": "document_start"
+            "js": ["content.js"]
         }
     ],
     "icons": {
@@ -31,12 +30,7 @@
         "128": "icons/icon128.png"
     },
     "action": {
-        "default_popup": "popup.html",
         "default_icon": "icons/icon.png"
-    },
-    "background": {
-        "service_worker": "background.js",
-        "type": "module"
     },
     "devtools_page": "devtools.html",
     "incognito": "split",
