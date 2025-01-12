@@ -176,9 +176,9 @@ function createOverlay(answers) {
         li.style.marginBottom = '10px';
         li.innerHTML = `
             <strong>Q${answer.index + 1}:</strong> ${answer.question}<br>
-            <span style="color: ${answer.isMultiAnswer ? '#FFA500' : '#4CAF50'}">
-                ${answer.correctAnswer}
-                ${answer.isMultiAnswer ? '<br><small>(Multiple answers)</small>' : ''}
+            <span style="color: #4CAF50">
+                ${answer.correctAnswer.split(' OR ').map(part => part.trim()).join('<span style="color: #FFA500"> OR </span>')}
+                ${answer.isMultiAnswer ? '<span style="color: #FFA500"><br><small>(Multiple answers)</small></span>' : ''}
             </span>
         `;
         answersList.appendChild(li);
