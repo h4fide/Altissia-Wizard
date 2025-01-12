@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Altissia Wizard",
-    "version": "1.10.1",
+    "version": "1.0.1",
     "description": "Altissia Wizard is a tool that helps you to get answers of quizzes in OFPPT Langues platform.",
     "permissions": [
         "storage",
