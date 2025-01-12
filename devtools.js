@@ -9,6 +9,27 @@ window.onerror = function(msg, url, lineNo, columnNo, error) {
     return false;
 };
 
+// Add message listener
+window.addEventListener('message', function(event) {
+    if (event.data.type === 'updateContent') {
+        const data = event.data.data;
+        const container = document.querySelector('.container');
+        const questionsCounter = document.querySelector('#questions-dis');
+        
+        if (container && questionsCounter) {
+            questionsCounter.textContent = `${data.questionCount} questions`;
+            // Update container with answers...
+            container.innerHTML = `
+                <div class="header">
+                    <a href="#" class="back-button">Questions disponibles</a>
+                    <span class="progress">${data.questionCount} questions</span>
+                </div>
+                <!-- Add your HTML template here -->
+            `;
+        }
+    }
+});
+
 // Copy text function
 function copyText(element) {
     const text = element.querySelector('.answer-text').textContent;
@@ -23,6 +44,17 @@ function copyText(element) {
             console.error('Failed to copy text:', err);
         });
 }
+
+// Global copy function
+window.copyText = function(element) {
+    const text = element.querySelector('.answer-text').textContent;
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            element.classList.add('copied');
+            setTimeout(() => element.classList.remove('copied'), 1000);
+        })
+        .catch(console.error);
+};
 
 let panelWindow = null;
 const LESSON_URL_PATTERN = /https:\/\/app\.ofppt-langues\.ma\/gw\/lcapi\/main\/api\/lc\/lessons\/(.*?)$/;

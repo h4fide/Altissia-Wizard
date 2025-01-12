@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         body {
@@ -206,39 +206,6 @@
         </div>
         <h1 class="question-title">En attente des réponses...</h1>
     </div>
-    <script>
-        // Add message listener
-        window.addEventListener('message', function(event) {
-            if (event.data.type === 'updateContent') {
-                const data = event.data.data;
-                const container = document.querySelector('.container');
-                const questionsCounter = document.querySelector('#questions-dis');
-                
-                if (container && questionsCounter) {
-                    questionsCounter.textContent = `${data.questionCount} questions`;
-                    // Update container with answers...
-                    container.innerHTML = `
-                        <div class="header">
-                            <a href="#" class="back-button">Questions disponibles</a>
-                            <span class="progress">${data.questionCount} questions</span>
-                        </div>
-                        <!-- ...rest of your HTML template... -->
-                    `;
-                }
-            }
-        });
-
-        // Global copy function
-        window.copyText = function(element) {
-            const text = element.querySelector('.answer-text').textContent;
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    element.classList.add('copied');
-                    setTimeout(() => element.classList.remove('copied'), 1000);
-                })
-                .catch(console.error);
-        };
-    </script>
     <script src="devtools.js"></script>
 </body>
 </html>
