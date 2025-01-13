@@ -2,7 +2,7 @@
 
 A Chrome DevTools extension that helps display answers for Altissia language learning platform exercises.
 
-## Features
+## Features 🚀
 
 - Automatically detects and displays exercise answers
 - Copy answers with a single click
@@ -10,42 +10,19 @@ A Chrome DevTools extension that helps display answers for Altissia language lea
 - Real-time updates as you navigate through lessons
 - Clean and intuitive user interface
 
-## Installation
+## Demonstration Video 📹
 
-1. Download or clone this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right corner
-4. Click "Load unpacked" and select the extension directory
-5. Open DevTools (F12) and find the "Altissia Wizard" tab
+<video src="video.mp4" controls></video>
 
-## Usage
 
-1. Navigate to `app.ofppt-langues.ma`
-2. Open Chrome DevTools (F12) or `Ctrl+Shift+I`
-3. Select the `Altissia Wizard` tab
-4. Start a lesson or exercise
-5. Answers will automatically appear in the panel
-6. Click on any answer to copy it to clipboard
 
-## Development
+## Installation 🧙‍♂️
 
-### File Structure
-
-```
-Altissia Wizard/
-├── manifest.json
-├── devtools.html
-├── devtools.js
-├── styles.css
-└── icons/
-    └── icon.png
-```
-
-### Technical Details
-- Uses Chrome DevTools API
-- Monitors network requests for lesson data
-- Processes JSON responses to extract answers
-- Updates UI in real-time
+>1. Download or clone this repository 
+>2. Open Chrome and navigate to `chrome://extensions/`
+>3. Enable `Developer mode` in the top right corner
+>4. Click `Load unpacked` and select the extension directory
+>5. Open DevTools `F12` or `Ctrl+Shift+I` and navigate to the "Altissia Wizard" tab
 
 ## Contributing
 
