@@ -10,14 +10,11 @@ The purpose of this extension is to help you finish levels faster without having
 - Real-time updates as you navigate through lessons
 - Clean and intuitive user interface
 
-## Demonstration Video 📹
+## Demonstration 📹
 
-<video width="100%" controls>
-    <source src="https://mimicapp.web.app/assets/2315645w/altissia-wizard-demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
+![Altissia Wizard Demo](demo.gif)
 
-
+[Watch the full demo video](https://mimicapp.web.app/assets/2315645w/altissia-wizard-demo.mp4)
 
 ## Installation 🧙‍♂️
 
