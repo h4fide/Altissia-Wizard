@@ -17,44 +17,16 @@ window.addEventListener('message', function(event) {
         const questionsCounter = document.querySelector('#questions-dis');
         
         if (container && questionsCounter) {
-            questionsCounter.textContent = `${data.questionCount} questions`;
-            // Update container with answers...
+            questionsCounter.textContent = `${data.questionCount} Questions`;
             container.innerHTML = `
                 <div class="header">
                     <a href="#" class="back-button">Questions disponibles</a>
-                    <span class="progress">${data.questionCount} questions</span>
+                    <span class="progress">${data.questionCount} Questions</span>
                 </div>
-                <!-- Add your HTML template here -->
             `;
         }
     }
 });
-
-// Copy text function
-function copyText(element) {
-    const text = element.querySelector('.answer-text').textContent;
-    navigator.clipboard.writeText(text)
-        .then(() => {
-            element.classList.add('copied');
-            setTimeout(() => {
-                element.classList.remove('copied');
-            }, 1000);
-        })
-        .catch(err => {
-            console.error('Failed to copy text:', err);
-        });
-}
-
-// Global copy function
-window.copyText = function(element) {
-    const text = element.querySelector('.answer-text').textContent;
-    navigator.clipboard.writeText(text)
-        .then(() => {
-            element.classList.add('copied');
-            setTimeout(() => element.classList.remove('copied'), 1000);
-        })
-        .catch(console.error);
-};
 
 let panelWindow = null;
 const LESSON_URL_PATTERN = /https:\/\/app\.ofppt-langues\.ma\/gw\/lcapi\/main\/api\/lc\/lessons\/(.*?)$/;
@@ -65,26 +37,26 @@ function createRequestContainer(panelWindow, title, answers) {
     if (!container) return;
 
     const formatQuestion = (question) => {
-        return question.replace(/\[GAP\]/g, '<span class="gap-dots"> .....</span>');
+        return question?.replace(/\[GAP\]/g, '<span class="gap-dots"> .....</span>') || '';
     };
 
     container.innerHTML = `
         <div class="header">
-            <a href="#" class="back-button">Questions disponibles</a>
-            <span class="progress">${answers.length} questions</span>
+            <a href="#" class="back-button" id="backButton">Questions disponibles</a>
+            <span class="progress">${answers?.length || 0} Questions</span>
         </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
         <h1 class="question-title">${title || 'Réponses correctes'}</h1>
-        ${answers.map((answer, idx) => `
+        ${(answers || []).map((answer, idx) => `
             <div class="question-box">
                 <div class="question">
                     <b>Question ${idx + 1}:</b> ${formatQuestion(answer.question)}
                 </div>
                 <div class="options">
-                    ${answer.correctAnswer.map((ans, ansIdx) => `
-                        <div class="option ${answer.isMultipleCorrect ? 'primary-option' : (ansIdx === 0 ? 'primary-option' : 'alternative-option')}" onclick="copyText(this)">
+                    ${(answer.correctAnswer || []).map((ans, ansIdx) => `
+                        <div class="option ${answer.isMultipleCorrect ? 'primary-option' : (ansIdx === 0 ? 'primary-option' : 'alternative-option')}" data-answer="${ans}">
                             ${(!answer.isMultipleCorrect && ansIdx > 0) ? '<span class="ou-label">OU</span>' : ''}
                             <span class="answer-text">${ans}</span>
                         </div>
@@ -129,31 +101,74 @@ chrome.devtools.panels.create(
                 request.getContent((content, encoding) => {
                     try {
                         const responseData = JSON.parse(content);
-                        const answers = responseData.content?.items?.map((item, index) => {
-                            let allCorrectAnswers;
-                            
-                            if (item.correctAnswers[0].length > 1) {
-                                allCorrectAnswers = item.correctAnswers[0];
-                            } else {
-                                allCorrectAnswers = item.correctAnswers.map(set => set[0]);
+                        console.log('Parsed response data:', responseData); // Debug log
+
+                        // More detailed validation
+                        if (!responseData || !responseData.content || !Array.isArray(responseData.content.items)) {
+                            // Show waiting message instead of error
+                            const container = panelWindow.document.querySelector('.container');
+                            if (container) {
+                                container.innerHTML = `
+                                <div class="header">
+                                    <span class="progress">🧙‍♂️ Waiting...</span>
+                                </div>
+                                <div class="waiting-message" style="text-align: center; padding: 20px; color: #666;">
+                                    <h1 style="font-size: 4em;">👀</h1>
+                                    <h2>En attente du prochain exercice...</2>
+                                </div>
+                                `;
+                            }
+                            return;
+                        }
+
+                        // Rest of the answer processing code
+                        const items = responseData.content.items;
+                        const answers = items.map((item, index) => {
+                            if (!item) return null;
+
+                            const correctAnswers = item.correctAnswers || [];
+                            let allCorrectAnswers = [];
+
+                            try {
+                                if (Array.isArray(correctAnswers[0])) {
+                                    allCorrectAnswers = correctAnswers[0].filter(Boolean);
+                                } else {
+                                    allCorrectAnswers = correctAnswers.map(set => 
+                                        Array.isArray(set) ? set[0] : set
+                                    ).filter(Boolean);
+                                }
+                            } catch (e) {
+                                console.warn('Error processing answers for item:', item);
                             }
 
                             return {
-                                question: item.question,
+                                question: item.question || 'Question not available',
                                 correctAnswer: allCorrectAnswers,
-                                isMultipleCorrect: item.correctAnswers.length > 1 && item.correctAnswers[0].length === 1,
+                                isMultipleCorrect: correctAnswers.length > 1 && 
+                                    Array.isArray(correctAnswers[0]) && 
+                                    correctAnswers[0].length === 1,
                                 index: index
                             };
-                        }) || [];
+                        }).filter(Boolean);
 
-                        console.log('Processed answers:', answers.length);
-                        createRequestContainer(panelWindow, responseData.title, answers);
+                        if (answers.length > 0) {
+                            createRequestContainer(panelWindow, responseData.title || 'Untitled Lesson', answers);
+                        }
 
                     } catch (error) {
-                        console.error('Error processing lesson response:', error);
+                        console.warn('Waiting for valid exercise data');
                         const container = panelWindow.document.querySelector('.container');
                         if (container) {
-                            container.innerHTML = `<div class="error">Error loading lesson content: ${error.message}</div>`;
+                            container.innerHTML = `
+                                <div class="header">
+                                    <span class="progress">🧙‍♂️ Waiting...</span>
+                                </div>
+                                <div class="waiting-message" style="text-align: center; padding: 20px; color: #666;">
+                                    <h1 style="font-size: 4em;">👀</h1>
+                                    <h2>En attente du prochain exercice...</2>
+                                </div>
+
+                            `;
                         }
                     }
                 });

@@ -2,8 +2,6 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -29,8 +27,9 @@
         }
 
         .back-button {
-            color: #2557a7;
-            font-size: 16px;
+            font-family: Arial, 'Helvetica Neue', sans-serif;
+            color: #1c4072;
+            font-size: 15px;
             text-decoration: none;
         }
 
@@ -142,13 +141,10 @@
             padding: 10px 20px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
             position: relative;
+            background-color: #fff;
         }
 
         .primary-option {
@@ -175,17 +171,6 @@
             font-weight: bold;
         }
 
-        .option.copied {
-            opacity: 0.8;
-        }
-
-        .option.copied::after {
-            content: 'Copié';
-            position: absolute;
-            right: 20px;
-            color: inherit;
-        }
-
         .no-data {
             text-align: center;
             color: #666;
@@ -197,14 +182,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="#" class="back-button">Questions disponibles</a>
-            <span id="questions-dis" class="progress">En attente...</span>
+            <a href="#" class="back-button">En attente...</a>
+            <span id="questions-dis" class="progress">👀</span>
         </div>
         <div id="error-container" style="color: red; display: none;"></div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <h1 class="question-title">En attente des réponses...</h1>
+        <h1 class="question-title">En attente des exercices à corriger...</h1>
+        <p class="no-data">Choisir un exercice pour commencer la correction.</p>
     </div>
     <script src="devtools.js"></script>
 </body>
