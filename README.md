@@ -12,9 +12,7 @@ The purpose of this extension is to help you finish levels faster without having
 
 ## Demonstration 📹
 
-<div align="center">
-  <video width="80%" controls autoplay loop muted playsinline preload="auto" src="https://mimicapp.web.app/assets/2315645w/altissia-wizard-demo.mp4"></video>
-</div>
+https://github.com/user-attachments/assets/f299c60e-838b-4611-bd97-91476904361b
 
 
 ## Installation 🧙‍♂️
