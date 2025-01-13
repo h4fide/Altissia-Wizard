@@ -15,6 +15,8 @@ The purpose of this extension is to help you finish levels faster without having
 <div align="center">
   <video width="100%" controls autoplay loop muted playsinline preload="auto" src="https://mimicapp.web.app/assets/2315645w/altissia-wizard-demo.mp4"></video>
 </div>
+
+
 ## Installation 🧙‍♂️
 
 1. Download or clone this repository 
