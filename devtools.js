@@ -1,4 +1,3 @@
-// Error handling
 window.onerror = function(msg, url, lineNo, columnNo, error) {
     const errorContainer = document.getElementById('error-container');
     if (errorContainer) {
@@ -9,7 +8,6 @@ window.onerror = function(msg, url, lineNo, columnNo, error) {
     return false;
 };
 
-// Add message listener
 window.addEventListener('message', function(event) {
     if (event.data.type === 'updateContent') {
         const data = event.data.data;
@@ -31,7 +29,6 @@ window.addEventListener('message', function(event) {
 let panelWindow = null;
 const LESSON_URL_PATTERN = /https:\/\/app\.ofppt-langues\.ma\/gw\/lcapi\/main\/api\/lc\/lessons\/(.*?)$/;
 
-// Create container and display functions
 function createRequestContainer(panelWindow, title, answers) {
     const container = panelWindow.document.querySelector('.container');
     if (!container) return;
@@ -67,7 +64,6 @@ function createRequestContainer(panelWindow, title, answers) {
     `;
 }
 
-// Update panel creation and request listener
 chrome.devtools.panels.create(
     "Altissia Wizard",
     "icons/icon.png",
@@ -85,7 +81,6 @@ chrome.devtools.panels.create(
             panelWindow = null;
         });
 
-        // Move network listener inside panel creation callback
         chrome.devtools.network.onRequestFinished.addListener((request) => {
             console.log('Request intercepted:', request.request.url);
             
@@ -101,16 +96,14 @@ chrome.devtools.panels.create(
                 request.getContent((content, encoding) => {
                     try {
                         const responseData = JSON.parse(content);
-                        console.log('Parsed response data:', responseData); // Debug log
+                        console.log('Parsed response data:', responseData);
 
-                        // More detailed validation
                         if (!responseData || !responseData.content || !Array.isArray(responseData.content.items)) {
-                            // Show waiting message instead of error
                             const container = panelWindow.document.querySelector('.container');
                             if (container) {
                                 container.innerHTML = `
                                 <div class="header">
-                                    <span class="progress">🧙‍♂️ Waiting...</span>
+                                    <span class="progress">🧙‍♂️ Waiting</span>
                                 </div>
                                 <div class="waiting-message" style="text-align: center; padding: 20px; color: #666;">
                                     <h1 style="font-size: 4em;">👀</h1>
@@ -121,7 +114,6 @@ chrome.devtools.panels.create(
                             return;
                         }
 
-                        // Rest of the answer processing code
                         const items = responseData.content.items;
                         const answers = items.map((item, index) => {
                             if (!item) return null;
