@@ -12,10 +12,9 @@ The purpose of this extension is to help you finish levels faster without having
 
 ## Demonstration 📹
 
-![Altissia Wizard Demo](demo.gif)
-
-[Watch the full demo video](https://mimicapp.web.app/assets/2315645w/altissia-wizard-demo.mp4)
-
+<div align="center">
+  <video width="100%" controls autoplay loop muted playsinline preload="auto" src="https://mimicapp.web.app/assets/2315645w/altissia-wizard-demo.mp4"></video>
+</div>
 ## Installation 🧙‍♂️
 
 1. Download or clone this repository 
