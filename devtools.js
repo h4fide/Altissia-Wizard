@@ -1,4 +1,4 @@
-const LESSON_URL_PATTERN = /https:\/\/app\.ofppt-langues\.ma\/gw\/lcapi\/main\/api\/lc\/lessons\/(.*?)$/;
+const LESSON_URL_PATTERN = /\/gw\/lcapi\/main\/api\/lc\/lessons\/(.*?)$/;
 let panelWindow = null;
 
 window.onerror = function(msg, url, lineNo, columnNo, error) {
