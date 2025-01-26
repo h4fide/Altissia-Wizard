@@ -52,7 +52,7 @@ function showWaitingMessage(container) {
         </div>
         <div class="waiting-message" style="text-align: center; padding: 20px; color: #666;">
             <h1 style="font-size: 4em;">👀</h1>
-            <h2>En attente du prochain exercice...</h2>
+            <h2>Waiting for next exercise...</h2>
         </div>
     `;
 }
@@ -63,13 +63,13 @@ function createRequestContainer(panelWindow, title, answers) {
 
     container.innerHTML = `
         <div class="header">
-            <a href="#" class="back-button" id="backButton">Questions disponibles</a>
+            <a href="#" class="back-button" id="backButton">Available Questions</a>
             <span class="progress">${answers?.length || 0} Questions</span>
         </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <h1 class="question-title">${title || 'Réponses correctes'}</h1>
+        <h1 class="question-title">${title || 'Correct Answers'}</h1>
         ${(answers || []).map((answer, idx) => `
             <div class="question-box">
                 <div class="question">
@@ -78,7 +78,7 @@ function createRequestContainer(panelWindow, title, answers) {
                 <div class="options">
                     ${(answer.correctAnswer || []).map((ans, ansIdx) => `
                         <div class="option ${answer.isMultipleCorrect ? 'primary-option' : (ansIdx === 0 ? 'primary-option' : 'alternative-option')}" data-answer="${ans}">
-                            ${(!answer.isMultipleCorrect && ansIdx > 0) ? '<span class="ou-label">OU</span>' : ''}
+                            ${(!answer.isMultipleCorrect && ansIdx > 0) ? '<span class="ou-label">OR</span>' : ''}
                             <span class="answer-text">${ans}</span>
                         </div>
                     `).join('')}
@@ -98,7 +98,7 @@ window.addEventListener('message', function(event) {
             questionsCounter.textContent = `${data.questionCount} Questions`;
             container.innerHTML = `
                 <div class="header">
-                    <a href="#" class="back-button">Questions disponibles</a>
+                    <a href="#" class="back-button">Available Questions</a>
                     <span class="progress">${data.questionCount} Questions</span>
                 </div>
             `;
