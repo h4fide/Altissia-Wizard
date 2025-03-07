@@ -323,6 +323,46 @@
             display: inline-block;
             animation: eyeMove 3s ease-in-out infinite;
         }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .decline-button {
+            background-color: white;
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        .accept-button {
+            background-color: #28ca61;
+            color: white;
+            border: none;
+            width: 60%;
+            border: 1px solid #202020;
+            
+        }
+        .decline-button:hover {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: red;
+            color: white;
+        }
+        .accept-button:hover {
+            box-shadow: 0 2px 4px rgba(41, 130, 96, 0.421);
+            background-color: #36a951;
+            color: rgb(255, 255, 255);
+        }
     </style>
 </head>
 <body>
@@ -358,6 +398,25 @@
                 <img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub">
                 GitHub
             </a>
+        </div>
+    </div>
+    
+    <!-- Legal Disclaimer Modal -->
+    <div id="legalModal" class="modal">
+        <div class="modal-content">
+            <h2>Legal Disclaimer </h2>
+            <p>Before using Altissia Wizard, please read and accept the following terms:</p>
+            <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin: 10px 0; font-size: 14px;">
+                <p>1. This extension is provided "as is" without warranty of any kind.</p>
+                <p>2. The developer is not responsible for any misuse of this extension.</p>
+                <p>3. This extension is meant for educational purposes only.</p>
+                <p>4. By using this extension, you agree to use it responsibly and in accordance with your institution's policies.</p>
+                <p>5. The developer is not affiliated with Altissia or any language learning platform.</p>
+            </div>
+            <div class="modal-buttons">
+                <button id="declineTerms" class="modal-button decline-button">Decline</button>
+                <button id="acceptTerms" class="modal-button accept-button">Accept</button>
+            </div>
         </div>
     </div>
     <script src="devtools.js"></script>

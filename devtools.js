@@ -1,6 +1,58 @@
 const LESSON_URL_PATTERN = /\/gw\/lcapi\/main\/api\/lc\/lessons\/(.*?)$/;
 let panelWindow = null;
 let isPanelActive = false;
+let isTermsAccepted = false;
+
+// Check if user has accepted terms
+function checkTermsAcceptance() {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(['termsAccepted'], function(result) {
+            isTermsAccepted = !!result.termsAccepted;
+            resolve(isTermsAccepted);
+        });
+    });
+}
+
+// Show legal modal if terms not accepted
+function showLegalModalIfNeeded() {
+    checkTermsAcceptance().then(accepted => {
+        if (!accepted) {
+            document.getElementById('legalModal').style.display = 'flex';
+        }
+    });
+}
+
+// Handle terms acceptance
+function handleTermsAcceptance(accepted) {
+    const legalModal = document.getElementById('legalModal');
+    
+    if (accepted) {
+        chrome.storage.local.set({termsAccepted: true}, function() {
+            isTermsAccepted = true;
+            legalModal.style.display = 'none';
+        });
+    } else {
+        // User declined terms
+        const container = document.querySelector('.container');
+        if (container) {
+            container.innerHTML = `
+                <div class="header">
+                    <span class="progress">Terms Declined</span>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <h2>Extension Disabled</h2>
+                    <img src="icons/decline.png" alt="decline" style="width: 100px; height: 100px; display: block; margin: 15px auto;">
+                    <p>You must accept the terms to use this extension.</p>
+                    <button id="showTermsAgain" style="margin-top: 20px; padding: 10px 15px; background-color: #1C4072; color: white; border: none; border-radius: 4px; cursor: pointer;">Show Terms Again</button>
+                </div>
+            `;
+            
+            document.getElementById('showTermsAgain').addEventListener('click', function() {
+                legalModal.style.display = 'flex';
+            });
+        }
+    }
+}
 
 window.onerror = function(msg, url, lineNo, columnNo, error) {
     const errorContainer = document.getElementById('error-container');
@@ -166,9 +218,9 @@ chrome.devtools.panels.create(
                 return;
             }
 
-            // Skip processing if panel is not active
-            if (!isPanelActive || !panelWindow) {
-                console.log('Panel window not active or ready');
+            // Skip processing if panel is not active or terms not accepted
+            if (!isPanelActive || !panelWindow || !isTermsAccepted) {
+                console.log('Panel window not active or terms not accepted');
                 return;
             }
 
@@ -219,10 +271,25 @@ document.getElementById('closeModal').addEventListener('click', function() {
     document.getElementById('helpModal').style.display = 'none';
 });
 
+// Legal modal functionality
+document.getElementById('acceptTerms').addEventListener('click', function() {
+    handleTermsAcceptance(true);
+});
+
+document.getElementById('declineTerms').addEventListener('click', function() {
+    handleTermsAcceptance(false);
+    document.getElementById('legalModal').style.display = 'none';
+});
+
 // Close modal when clicking outside
 window.addEventListener('click', function(event) {
-    const modal = document.getElementById('helpModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
+    const helpModal = document.getElementById('helpModal');
+    if (event.target === helpModal) {
+        helpModal.style.display = 'none';
     }
+});
+
+// Initialize when DOM content is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    showLegalModalIfNeeded();
 });
