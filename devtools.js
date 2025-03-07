@@ -3,7 +3,6 @@ let panelWindow = null;
 let isPanelActive = false;
 let isTermsAccepted = false;
 
-// Check if user has accepted terms
 function checkTermsAcceptance() {
     return new Promise((resolve) => {
         chrome.storage.local.get(['termsAccepted'], function(result) {
@@ -13,7 +12,6 @@ function checkTermsAcceptance() {
     });
 }
 
-// Show legal modal if terms not accepted
 function showLegalModalIfNeeded() {
     checkTermsAcceptance().then(accepted => {
         if (!accepted) {
@@ -22,7 +20,6 @@ function showLegalModalIfNeeded() {
     });
 }
 
-// Handle terms acceptance
 function handleTermsAcceptance(accepted) {
     const legalModal = document.getElementById('legalModal');
     
@@ -30,9 +27,9 @@ function handleTermsAcceptance(accepted) {
         chrome.storage.local.set({termsAccepted: true}, function() {
             isTermsAccepted = true;
             legalModal.style.display = 'none';
+            location.reload();
         });
     } else {
-        // User declined terms
         const container = document.querySelector('.container');
         if (container) {
             container.innerHTML = `
@@ -218,7 +215,6 @@ chrome.devtools.panels.create(
                 return;
             }
 
-            // Skip processing if panel is not active or terms not accepted
             if (!isPanelActive || !panelWindow || !isTermsAccepted) {
                 console.log('Panel window not active or terms not accepted');
                 return;
@@ -226,7 +222,6 @@ chrome.devtools.panels.create(
 
             request.getContent((content, encoding) => {
                 try {
-                    // Validate panel is still active before processing
                     if (!isPanelActive || !panelWindow) {
                         console.log('Panel became inactive while processing request');
                         return;
