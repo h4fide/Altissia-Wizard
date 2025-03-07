@@ -2,6 +2,8 @@
 
 A Chrome DevTools extension that helps display answers for Altissia language learning platform exercises.
 The purpose of this extension is to help you finish levels faster without having to spend time on exercises that you already know, this extension is for educational not cheating purposes and should be used responsibly.
+    
+### [Download ⬇️](https://github.com/h4fide/Altissia-Wizard/releases/download/v1.0.1/Altissia-Wizard_v1.0.1.zip) - Latest Release
 
 ## Features 🚀
 
@@ -17,11 +19,19 @@ https://github.com/user-attachments/assets/f299c60e-838b-4611-bd97-91476904361b
 
 ## Installation 🧙‍♂️
 
-1. Download or clone this repository 
+1. Download [Here](https://github.com/h4fide/Altissia-Wizard/releases/download/v1.0.1/Altissia-Wizard_v1.0.1.zip) or Clone the repository or using the following command:
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable `Developer mode` in the top right corner
 4. Click `Load unpacked` and select the extension directory
 5. Open DevTools `F12` or `Ctrl+Shift+I` and navigate to the "Altissia Wizard" tab
+
+## Visual Installation Guide 📺
+
+Need a visual guide for installation? Check out this tutorial:
+
+[How to Load an Unpacked Chrome Extension](https://youtu.be/xiT8c8M1OIw?t=73)
+
+The video shows the exact steps to enable Developer mode and load the extension into Chrome.
 
 ## Contributing
 
