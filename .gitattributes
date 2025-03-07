@@ -1,1 +1,2 @@
-*.html linguist-vendored
+# Linguist language overrides
+*.html linguist-language=JavaScript
