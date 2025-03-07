@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        @font-face {
+            font-family: 'Inter';
+            src: url('fonts/inter-500.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f5f5f5;
@@ -145,6 +153,7 @@
             align-items: center;
             position: relative;
             background-color: #fff;
+            justify-content: space-between;
         }
 
         .primary-option {
@@ -177,20 +186,179 @@
             padding: 40px;
             font-size: 1.1em;
         }
+
+        .gap-number {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .copy-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .copy-button.copied {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .answer-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .welcome-image {
+            display: block;
+            max-width: 200px;
+            margin: 0 auto 20px;
+        }
+        
+        /* Help button and modal styles */
+        .help-button {
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-button:hover {
+            color: white;
+            background-color: #4FB6B2;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            color: #333;
+            border-radius: 6px;
+            background-color: #f5f5f5;
+            transition: background-color 0.2s;
+        }
+        
+        .contact-link:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .contact-link img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        @keyframes eyeMove {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(5px) rotate(5deg); }
+            50% { transform: translateX(-5px) rotate(-5deg); }
+            75% { transform: translateX(5px) rotate(5deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+
+        .eye-catching {
+            font-size: 4em;
+            display: inline-block;
+            animation: eyeMove 3s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <a href="#" class="back-button">Waiting...</a>
-            <span id="questions-dis" class="progress">👀</span>
+            <div style="display: flex; align-items: center;">
+                <span id="questions-dis" class="progress"></span>
+                <button id="helpButton" class="help-button" title="Get help">?</button>
+            </div>
         </div>
         <div id="error-container" style="color: red; display: none;"></div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <h1 class="question-title">Waiting for exercises to check...</h1>
+        <h1 class="question-title">Waiting for exercise to load</h1>
+        <img src="icons\slide-screen-illust.png" alt="Exercise illustration" class="welcome-image">
         <p class="no-data">Choose an exercise to start</p>
+    </div>
+    
+    
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2>Need Help?</h2>
+            <p>Contact me through:</p>
+            <a href="https://t.me/hafide" target="_blank" class="contact-link">
+                <img src="https://telegram.org/img/favicon.ico" alt="Telegram">
+                Telegram
+            </a>
+            <a href="https://github.com/h4fide/Altissia-Wizard" target="_blank" class="contact-link">
+                <img src="https://github.githubassets.com/favicons/favicon.svg" alt="GitHub">
+                GitHub
+            </a>
+        </div>
     </div>
     <script src="devtools.js"></script>
 </body>
