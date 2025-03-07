@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/f299c60e-838b-4611-bd97-91476904361b
 
 Need a visual guide for installation? Check out this tutorial:
 
-[![How to Load an Unpacked Chrome Extension](https://img.youtube.com/vi/xiT8c8M1OIw/0.jpg)](https://youtu
+[![How to Load an Unpacked Chrome Extension](https://img.youtube.com/vi/xiT8c8M1OIw/0.jpg)](https://youtu.be/xiT8c8M1OIw?t=73)
 
 The video shows the exact steps to enable Developer mode and load the extension into Chrome.
 
