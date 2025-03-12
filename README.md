@@ -8,7 +8,7 @@ The purpose of this extension is to help you finish levels faster without having
 ### Edge Add-ons
 [![Microsoft Edge Add-on](https://get.microsoft.com/images/en-us%20dark.svg)](https://microsoftedge.microsoft.com/addons/detail/altissia-wizard/peagdpcjcjdopaapopnbecdaepijkojn)
 
-### [Manual Installation](#-Installation)
+### [Manual Installation](#Installation)
 Follow the steps below for manual installation if you prefer.
 ## Features 🚀
 
