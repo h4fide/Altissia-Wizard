@@ -3,8 +3,13 @@
 A Chrome DevTools extension that helps display answers for Altissia language learning platform exercises.
 The purpose of this extension is to help you finish levels faster without having to spend time on exercises that you already know, this extension is for educational not cheating purposes and should be used responsibly.
     
-### [Download ⬇️](https://github.com/h4fide/Altissia-Wizard/releases/download/v1.0.2/Altissia-Wizard_v1.0.2.zip) - Latest Release
+## Quick Install
 
+### Edge Add-ons
+[![Microsoft Edge Add-on](https://get.microsoft.com/images/en-us%20dark.svg)](https://microsoftedge.microsoft.com/addons/detail/altissia-wizard/peagdpcjcjdopaapopnbecdaepijkojn)
+
+### [Manual Installation](##-Installation)
+Follow the steps below for manual installation if you prefer.
 ## Features 🚀
 
 - Automatically detects and displays exercise answers
@@ -17,7 +22,7 @@ The purpose of this extension is to help you finish levels faster without having
 https://github.com/user-attachments/assets/f299c60e-838b-4611-bd97-91476904361b
 
 
-## Installation 🧙‍♂️
+## Installation
 
 1. Download [Here](https://github.com/h4fide/Altissia-Wizard/releases/download/v1.0.2/Altissia-Wizard_v1.0.2.zip) or Clone the repository or using the following command:
 2. Open Chrome and navigate to `chrome://extensions/`

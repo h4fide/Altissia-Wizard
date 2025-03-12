@@ -13,7 +13,6 @@
         "*://*.ofppt-langues.ma/*",
         "https://app.ofppt-langues.ma/*",
         "*://*.altissia.org/*",
-        "*://*.altissia.org/*",
         "*://*/platform/learning-path/*"
     ],
     "content_scripts": [
@@ -37,7 +36,7 @@
     "incognito": "split",
     "web_accessible_resources": [
         {
-            "resources": ["data.html"],
+            "resources": [],
             "matches": ["<all_urls>"]
         }
     ],
