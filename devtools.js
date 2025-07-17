@@ -103,6 +103,9 @@ function processAnswers(items) {
         };
     }).filter(Boolean);
 }
+ 
+
+
 
 function showWaitingMessage(container) {
     if (!container) {
@@ -122,12 +125,11 @@ function showWaitingMessage(container) {
 }
 
 function createRequestContainer(panelWindow, title, answers) {
-    // Safety check to ensure panel window is available
     if (!isPanelActive || !panelWindow || !panelWindow.document) {
         console.error('Panel window is not available');
         return;
     }
-    
+
     try {
         const container = panelWindow.document.querySelector('.container');
         if (!container) {
@@ -144,34 +146,87 @@ function createRequestContainer(panelWindow, title, answers) {
                 <div class="progress-fill"></div>
             </div>
             <h1 class="question-title">${title || 'Correct Answers'}</h1>
-            ${(answers || []).map((answer, idx) => `
+            ${(answers || []).map((answer, index) => `
                 <div class="question-box">
                     <div class="question">
-                        <b>Question ${idx + 1}:</b> ${formatQuestion(answer.question)}
+                        <b>Question ${index + 1}:</b> ${formatQuestion(answer.question)}
                     </div>
                     <div class="options">
-                        ${answer.hasMultipleGaps ? 
-                            answer.correctAnswer.map((ans, gapIdx) => `
-                                <div class="option primary-option" data-answer="${ans}">
-                                    <span class="gap-number">${gapIdx + 1}</span>
+                        ${answer.hasMultipleGaps
+                            ? answer.correctAnswer.map((correct, gapIndex) => `
+                                <div class="option primary-option" data-answer="${correct}">
+                                    <span class="gap-number">${gapIndex + 1}</span>
+                                    <span class="answer-text">${correct}</span>
+                                </div>
+                              `).join('')
+                            : (answer.correctAnswer || []).map((ans, i) => `
+                                <div class="option ${answer.isMultipleCorrect ? 'primary-option' : (i === 0 ? 'primary-option' : 'alternative-option')}" data-answer="${ans}">
+                                    ${(!answer.isMultipleCorrect && i > 0) ? '<span class="ou-label">OR</span>' : ''}
                                     <span class="answer-text">${ans}</span>
                                 </div>
-                            `).join('') 
-                            : 
-                            (answer.correctAnswer || []).map((ans, ansIdx) => `
-                                <div class="option ${answer.isMultipleCorrect ? 'primary-option' : (ansIdx === 0 ? 'primary-option' : 'alternative-option')}" data-answer="${ans}">
-                                    ${(!answer.isMultipleCorrect && ansIdx > 0) ? '<span class="ou-label">OR</span>' : ''}
-                                    <span class="answer-text">${ans}</span>
-                                </div>
-                            `).join('')
-                        }
+                              `).join('')}
                     </div>
                 </div>
             `).join('')}
         `;
+
+        const optionElements = panelWindow.document.querySelectorAll('.option');
+        optionElements.forEach(option => {
+            option.addEventListener('click', () => {
+                const text = option.getAttribute('data-answer');
+                if (text) copy(text, panelWindow.document);
+            });
+        });
+
     } catch (error) {
         console.error('Error updating panel content:', error);
     }
+}
+
+function copy(text, doc) {
+    const tempInput = doc.createElement("input");
+    tempInput.style.position = "absolute";
+    tempInput.style.left = "-9999px";
+    tempInput.value = text;
+    doc.body.appendChild(tempInput);
+    tempInput.select();
+    doc.execCommand("copy");
+    doc.body.removeChild(tempInput);
+    showCopySuccess(doc);
+}
+
+function showCopySuccess(doc) {
+    const existing = doc.getElementById('copy-success-msg');
+    if (existing) {
+        existing.remove();
+    }
+
+    const successMsg = doc.createElement('div');
+    successMsg.id = 'copy-success-msg';
+    successMsg.textContent = '✅ Copy successful';
+    successMsg.style.position = 'fixed';
+    successMsg.style.bottom = '30px';
+    successMsg.style.right = '30px';
+    successMsg.style.backgroundColor = '#4caf50';
+    successMsg.style.color = 'white';
+    successMsg.style.padding = '10px 20px';
+    successMsg.style.borderRadius = '8px';
+    successMsg.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+    successMsg.style.zIndex = '9999';
+    successMsg.style.fontFamily = 'Inter, sans-serif';
+    successMsg.style.transition = 'opacity 0.5s ease';
+    successMsg.style.opacity = '1';
+
+    doc.body.appendChild(successMsg);
+
+    setTimeout(() => {
+        successMsg.style.opacity = '0';
+        setTimeout(() => {
+            if (successMsg.parentNode) {
+                successMsg.parentNode.removeChild(successMsg);
+            }
+        }, 500);
+    }, 1500);
 }
 
 window.addEventListener('message', function(event) {
